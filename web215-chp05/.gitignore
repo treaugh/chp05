@@ -1,1 +1,3 @@
-./node_modules
+# telling git to ignore node_modules folder and not upload to github
+node_modules/
+
