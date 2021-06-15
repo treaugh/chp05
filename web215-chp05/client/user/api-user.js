@@ -49,7 +49,6 @@ const create = async (user) => {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + credentials.t
         },
         body: JSON.stringify(user)

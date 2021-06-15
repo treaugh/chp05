@@ -17,6 +17,11 @@ email: {
     required: 'Email is required'
 },
 
+about: {
+  type: String,
+  trim: true
+},
+
 created: {
     type: Date,
     default: Date.now
@@ -24,6 +29,10 @@ created: {
 updated: Date,
 salt: String,
 
+photo: {
+  data: Buffer,
+  contentType: String
+},
 
 hashed_password: {
     type: String,

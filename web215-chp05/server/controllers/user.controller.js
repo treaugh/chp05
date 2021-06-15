@@ -1,6 +1,13 @@
 import User from '../models/user.model'
 import extend from 'lodash/extend'
 import errorHandler from './../helpers/dbErrorHandler'
+import formidable from 'formidable'
+import fs from 'fs'
+import profileImage from './../../client/assets/images/profile-pic.png'
+
+const defaultPhoto = (req, res) => {
+  return req.sendFile(process.cwd()+profileImage)
+}
 
 const create = async (req, res) => {
   const user = new User(req.body)
@@ -50,19 +57,33 @@ const list = async (req, res) => {
 }
 
 const update = async (req, res) => {
-  try {
+  let form = new formidable.IncomingForm()
+  form.keepExtensions = true
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Photo could not be uploaded"
+      })
+
+    }
     let user = req.profile
     user = extend(user, req.body)
     user.updated = Date.now()
-    await user.save()
-    user.hashed_password = undefined
-    user.salt = undefined
-    res.json(user)
-  } catch (err) {
-    return res.status(400).json({
-      error: errorHandler.getErrorMessage(err)
-    })
-  }
+    if (files.photo) {
+      user.photo.data = fs.readFileSync(files.photo.path)
+      user.photo.contentType = files.photo.type
+    }
+    try {
+      await user.save()
+      user.hashed_password = undefined
+      user.salt = undefined
+      res.json(user)
+    } catch (err) {
+      return res.status(400).json({
+        error: errorHandler.getErrorMessage(err)
+      })
+    }
+  })
 }
 
 const remove = async (req, res) => {
@@ -77,6 +98,14 @@ const remove = async (req, res) => {
       error: errorHandler.getErrorMessage(err)
     })
   }
+}
+
+const photo = (req, res, next) => {
+  if(req.profile.photo.data) {
+    res.set("Content-Type", req.profile.photo.contentType)
+    return res.send(req.profle.photo.data)
+  }
+  next()
 }
 
 export default {
