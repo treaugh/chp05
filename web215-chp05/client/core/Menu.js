@@ -10,7 +10,7 @@ import {Link, withRouter} from 'react-router-dom'
 
 const isActive = (history, path) => {
   if (history.location.pathname == path)
-    return {color: '#ff4081'}
+    return {color: '#ffa726'}
   else
     return {color: '#ffffff'}
 }
@@ -18,15 +18,12 @@ const Menu = withRouter(({history}) => (
   <AppBar position="static">
     <Toolbar>
       <Typography variant="h6" color="inherit">
-        MERN Skeleton
+        MERN Social
       </Typography>
       <Link to="/">
         <IconButton aria-label="Home" style={isActive(history, "/")}>
           <HomeIcon/>
         </IconButton>
-      </Link>
-      <Link to="/users">
-        <Button style={isActive(history, "/users")}>Users</Button>
       </Link>
       {
         !auth.isAuthenticated() && (<span>
@@ -43,11 +40,15 @@ const Menu = withRouter(({history}) => (
       {
         auth.isAuthenticated() && (<span>
           <Link to={"/user/" + auth.isAuthenticated().user._id}>
-            <Button style={isActive(history, "/user/" + auth.isAuthenticated().user._id)}>My Profile</Button>
+            <Button style={isActive(history, "/user/" 
+                  + auth.isAuthenticated().user._id)}>
+                    My Profile
+            </Button>
           </Link>
-          <Button color="inherit" onClick={() => {
-              auth.clearJWT(() => history.push('/'))
-            }}>Sign out</Button>
+          <Button color="inherit"
+              onClick={() => { auth.clearJWT(() => history.push('/')) }}>
+                Sign out
+          </Button>
         </span>)
       }
     </Toolbar>

@@ -36,6 +36,7 @@ export default function ProfileTabs ( props ){
   
 }
 
+
 ProfileTabs.propTypes = {
   user: PropTypes.object.isRequired,
   removePostUpdate: PropTypes.func.isRequired,

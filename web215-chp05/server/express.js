@@ -48,7 +48,6 @@ app.use('/', postRoutes)
 
 app.get('*', (req, res) => {
   const sheets = new ServerStyleSheets()
-
   const context = {}
   const markup = ReactDOMServer.renderToString(
       sheets.collect(

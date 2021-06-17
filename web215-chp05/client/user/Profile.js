@@ -84,7 +84,8 @@ export default function Profile({ match }) {
       if (data.error) {
         setValues({...values, error: data.error})
       } else {
-        setValues({...values, user: data, following: !values.following})
+        setValues({...values, user: data, following:
+  !values.following})
       }
     })
   }
@@ -124,8 +125,9 @@ export default function Profile({ match }) {
             <ListItemAvatar>
               <Avatar src={photoUrl} className={classes.bigAvatar}/>
             </ListItemAvatar>
-            <ListItemText primary={values.user.name} secondary={values.user.email}/> {
-             auth.isAuthenticated().user && auth.isAuthenticated().user._id == values.user._id
+            <ListItemText primary={values.user.name} secondary={values.user.email}/> 
+            {auth.isAuthenticated().user &&
+                auth.isAuthenticated().user._id == values.user._id
              ? (<ListItemSecondaryAction>
                   <Link to={"/user/edit/" + values.user._id}>
                     <IconButton aria-label="Edit" color="primary">

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 import {unfollow, follow} from './api-user.js'
+import auth from '../auth/auth-helper.js'
 
 export default function FollowProfileButton (props) {
   const followClick = () => {
@@ -12,10 +13,14 @@ export default function FollowProfileButton (props) {
   }
     return (<div>
       { props.following
-        ? (<Button variant="contained" color="secondary" onClick={unfollowClick}>Unfollow</Button>)
-        : (<Button variant="contained" color="primary" onClick={followClick}>Follow</Button>)
-      }
+        ? (<Button variant="contained" color="secondary"
+              onClick={unfollowClick}>Unfollow</Button>)
+        : (<Button variant="contained" color="primary" 
+              onClick={followClick}>Follow</Button>)
+        }
+      
     </div>)
+    
 }
 FollowProfileButton.propTypes = {
   following: PropTypes.bool.isRequired,

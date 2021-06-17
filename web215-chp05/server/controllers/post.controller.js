@@ -64,7 +64,8 @@ const listNewsFeed = async (req, res) => {
   let following = req.profile.following
   following.push(req.profile._id)
   try{
-    let posts = await Post.find({postedBy: { $in : req.profile.following } })
+    let posts = await Post.find({postedBy: { $in : 
+req.profile.following } })
                           .populate('comments.postedBy', '_id name')
                           .populate('postedBy', '_id name')
                           .sort('-created')
@@ -107,7 +108,8 @@ const like = async (req, res) => {
 
 const unlike = async (req, res) => {
   try{
-    let result = await Post.findByIdAndUpdate(req.body.postId, {$pull: {likes: req.body.userId}}, {new: true})
+    let result = await Post.findByIdAndUpdate(req.body.postId,
+      {$pull: {likes: req.body.userId}}, {new: true})
     res.json(result)
   }catch(err){
     return res.status(400).json({
